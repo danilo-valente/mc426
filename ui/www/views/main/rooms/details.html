@@ -1,0 +1,7 @@
+<ion-view view-title="{{ room.name }}">
+    <ion-content class="padding text-center">
+        <ion-scroll direction="xy" class="wide-as-needed">
+            <mc-room-map ng-if="room" room="room" objects="room.objects"></mc-room-map>
+        </ion-scroll>
+    </ion-content>
+</ion-view>

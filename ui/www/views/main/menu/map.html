@@ -1,0 +1,20 @@
+<ion-view view-title="Visão Geral">
+    <ion-content class="padding text-center">
+        <ion-list>
+            <ion-item class="item-input item-select">
+                <div class="input-label">Piso</div>
+                <select ng-options="floor.name for floor in map.floors track by floor.id" ng-model="map.floor"></select>
+            </ion-item>
+
+            <ion-item>
+                <ion-scroll direction="xy" class="wide-as-needed">
+                    <mc-map ng-if="map"
+                            rooms="map.rooms"
+                            floor="map.floor"
+                            floors="map.floors"
+                            objects="map.objects"></mc-map>
+                </ion-scroll>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

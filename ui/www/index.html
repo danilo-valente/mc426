@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <script src="cordova.js"></script>
+
+    <script src="js/app.js"></script>
+
+    <script src="js/components/map.js"></script>
+    <script src="js/components/api/settings.js"></script>
+    <script src="js/components/api/security.js"></script>
+    <script src="js/components/api/notifications.js"></script>
+    <script src="js/components/api/objects.js"></script>
+
+    <script src="js/controllers/main.js"></script>
+    <script src="js/controllers/main/menu.js"></script>
+    <script src="js/controllers/main/menu/map.js"></script>
+    <script src="js/controllers/main/rooms.js"></script>
+    <script src="js/controllers/main/rooms/details.js"></script>
+    <script src="js/controllers/main/notifications.js"></script>
+</head>
+<body ng-app="app">
+
+<ion-nav-bar class="bar-stable">
+    <ion-nav-back-button></ion-nav-back-button>
+</ion-nav-bar>
+
+<ion-nav-view></ion-nav-view>
+
+</body>
+</html>

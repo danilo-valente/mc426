@@ -1,0 +1,30 @@
+<ion-tabs class="tabs-icon-top tabs-color-active-positive">
+
+    <!-- Dashboard Tab -->
+    <ion-tab title="Principal"
+             icon-off="ion-grid"
+             icon-on="ion-grid"
+             href="#/main/menu">
+        <ion-nav-view name="main.menu"></ion-nav-view>
+    </ion-tab>
+
+    <!-- Rooms Tab -->
+    <ion-tab title="Cômodos"
+             icon-off="ion-navicon-round"
+             icon-on="ion-navicon-round"
+             href="#/main/rooms">
+        <ion-nav-view name="main.rooms"></ion-nav-view>
+    </ion-tab>
+
+    <!-- Notifications Tab -->
+    <ion-tab title="Notificações"
+             icon-off="ion-chatbox-working"
+             icon-on="ion-chatbox-working"
+             href="#/main/notifications"
+             badge="notifications.length"
+             badge-style="badge-assertive">
+        <ion-nav-view name="main.notifications"></ion-nav-view>
+    </ion-tab>
+
+
+</ion-tabs>

@@ -1,0 +1,10 @@
+<ion-view view-title="Cômodos">
+    <ion-content>
+        <ion-list>
+            <ion-item ng-repeat="ntf in notifications">
+                {{ ntf.date | date:'dd/MM @ hh:mm' }} -
+                <span ng-class="{ assertive: ntf.level === 1, balanced: ntf.level === 0 }">{{ ntf.text }}</span>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>
