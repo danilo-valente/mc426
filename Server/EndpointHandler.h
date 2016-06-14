@@ -8,7 +8,7 @@ using namespace std;
 
 class EndpointHandler {
 public:
-  virtual string handle(EthernetClient client);
+  virtual string handle();
   virtual string toJson();
 };
 

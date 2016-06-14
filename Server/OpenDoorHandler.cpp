@@ -2,14 +2,14 @@
 
 
 OpenDoorHandler::OpenDoorHandler(Porta p) {
-  porta = porta;
+  porta = p;
 }
 
 OpenDoorHandler::~OpenDoorHandler() {
 
 }
 
-string OpenDoorHandler::handle(map<string, string> params, EthernetClient client) {
+string OpenDoorHandler::handle() {
   porta.destrancar();
   porta.abrir();
 
