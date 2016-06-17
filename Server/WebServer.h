@@ -15,10 +15,10 @@ public:
   void registerEndpoint(string method, string endpoint, EndpointHandler handler);
   void start();
   void stop();
+  void sendClientResponse(EthernetClient client, string response);
 
   EthernetServer server;
   map<string, EndpointHandler> handlers;
-  void sendClientResponse(EthernetClient client, string response);
 };
 
 #endif /* WEBSERVER_H_ */

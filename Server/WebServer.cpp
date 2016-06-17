@@ -1,6 +1,9 @@
 #include "WebServer.h"
 
 const string ENDPOINT_OPEN_DOOR = "/porta/abrir";
+const string ENDPOINT_CLOSE_DOOR = "/porta/fechar";
+const string ENDPOINT_TURN_ON_LIGHT = "/lampada/acender";
+const string ENDPOINT_TURN_OFF_LIGHT = "/porta/apagar";
 
 WebServer::WebServer(byte mac[], IPAddress ip, int port) {
   server(port);
@@ -50,6 +53,15 @@ void WebServer::start() {
           if (line.startsWith("GET")) {
             if (line.contains(ENDPOINT_OPEN_DOOR)) {
               response = handlers[ENDPOINT_OPEN_DOOR].handle(client);
+            }
+            if (line.contains(ENDPOINT_CLOSE_DOOR)) {
+              response = handlers[ENDPOINT_CLOSE_DOOR].handle(client);
+            }
+            if (line.contains(ENDPOINT_TURN_ON_LIGHT)) {
+              response = handlers[ENDPOINT_TURN_ON_LIGHT].handle(client);
+            }
+            if (line.contains(ENDPOINT_TURN_OFF_LIGHT)) {
+              response = handlers[ENDPOINT_TURN_OFF_LIGHT].handle(client);
             }
           }
 

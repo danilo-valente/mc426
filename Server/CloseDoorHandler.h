@@ -7,16 +7,16 @@ using namespace std;
 #include "EndpointHandler.h"
 #include "Porta.h"
 
-#ifndef OPEN_DOOR_HANDLER_H
-#define OPEN_DOOR_HANDLER_H
+#ifndef CLOSE_DOOR_HANDLER_H
+#define CLOSE_DOOR_HANDLER_H
 
-class OpenDoorHandler : public EndpointHandler {
+class CloseDoorHandler : public EndpointHandler {
 public:
-    OpenDoorHandler(Porta p);
+    CloseDoorHandler(Porta p);
     virtual ~OpenDoorHandler();
     virtual string handle();
     virtual string toJson();
     Porta porta;
 };
 
-#endif /* OPEN_DOOR_HANDLER_H */
+#endif /* CLOSE_DOOR_HANDLER_H */
