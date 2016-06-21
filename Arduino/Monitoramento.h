@@ -14,7 +14,7 @@
 
 #define MAX_DEVICES 10
 
-class Monitoramento : Device {
+class Monitoramento : public Device {
 private:
 	bool status;
   Device *devices[MAX_DEVICES];

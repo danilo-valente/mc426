@@ -10,18 +10,21 @@
 
 #include <Arduino.h>
 
-class Movimento {
+#include "Device.h"
+#include "Lampada.h"
+
+class Movimento : public Device {
 private:
-	uint8_t pinMovOut;
-	int setupTime;
+  	uint8_t pinPir;
+    uint32_t state;
+    Lampada *light;
 
 public:
-	Movimento(uint8_t pinMovOut, int setupTime);
-	virtual ~Movimento();
-
-	int readStatus();
-	void calibrate();
-
+    Movimento(uint8_t pinPir, Lampada *light);
+    virtual ~Movimento();
+    
+    void setup();
+    void loop();
 };
 
 #endif /* MOVIMENTO_H */
