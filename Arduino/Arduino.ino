@@ -19,11 +19,11 @@
 
 #define PIN_GAS     A0
 #define PIN_AUDIO    3
-#define PIN_PIR      5
-#define PIN_LIGHT_1  6
-#define PIN_LIGHT_2  7
-#define PIN_LIGHT_3  8
-#define PIN_LIGHT_4  9
+#define PIN_PIR      22
+#define PIN_LIGHT_1  30
+#define PIN_LIGHT_2  31
+#define PIN_LIGHT_3  32
+#define PIN_LIGHT_4  33
 
 #define EP_TURN_ON_LIGHT_1 "/lampada/acender?id=1"
 #define EP_TURN_OFF_LIGHT_1 "/lampada/apagar?id=1"
@@ -106,7 +106,7 @@ void readAll() {
     int i;
     Serial.print("M = ");
     Serial.println(monitoring.getStatus() ? "true" : "false");
-    for (i = 1; i <= 13; i++) {
+    for (i = 1; i <= 52; i++) {
         Serial.print(i);
         Serial.print(" = ");
         Serial.println(digitalRead(i));
