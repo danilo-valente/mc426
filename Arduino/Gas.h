@@ -12,16 +12,16 @@
 
 #include "Device.h"
 
-class Gas {
+class Gas : Device {
 private:
-	uint8_t pinGas;
+    uint8_t pinGas;
 public:
-	Gas(uint8_t pinGas);
-	virtual ~Gas();
-
-  void setup();
-  void loop();
-	int readGas();
+    Gas(uint8_t pinGas);
+    virtual ~Gas();
+    
+    void setup();
+    void loop();
+    int readGas();
 };
 
 #endif /* GAS_H */

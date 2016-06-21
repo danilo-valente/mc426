@@ -7,7 +7,7 @@
 
 #include "Gas.h"
 
-Gas::Gas(uint8_t pinGas): pinGas(pinGas) {
+Gas::Gas(uint8_t pinGas) : pinGas(pinGas) {
 }
 
 Gas::~Gas() {

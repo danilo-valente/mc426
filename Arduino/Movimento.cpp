@@ -7,26 +7,32 @@
 
 #include "Movimento.h"
 
-Movimento::Movimento(uint8_t pinMovOut, int setupTime) : pinMovOut(pinMovOut), setupTime(setupTime) {
-    pinMode(pinMovOut, INPUT);
-//    digitalWrite(pinMovOut, LOW);
+Movimento::Movimento(uint8_t pinPir, Lampada *light) : pinPir(pinPir), light(light) {
+    state = LOW;
 }
 
 Movimento::~Movimento() {
 }
 
-void Movimento::calibrate() {
-    Serial.print("Calibrando sensor ");
-    for (int i = 0; i < setupTime; i++) {
-        Serial.print(".");
-        delay(1000);
+void Movimento::setup() {
+    Serial.println("Movimento::setup");
+    pinMode(pinPir, INPUT);
+    digitalWrite(pinPir, LOW);
+}
+
+void Movimento::loop() {
+    Serial.println("Movimento::loop");
+    if (digitalRead(pinPir) == HIGH) {
+        if (state == LOW) {
+            light->acender();
+            Serial.println("Motion detected!");
+            state = HIGH;
+        }
+    } else {
+        if (state == HIGH) {
+            light->apagar();
+            Serial.println("Motion ended!");
+            state = LOW;
+        }
     }
-    Serial.println(" Done");
-    Serial.println("Sensor de Movimento Calibrado");
-    delay(50);
 }
-
-int Movimento::readStatus() {
-    return digitalRead(pinMovOut);
-}
-
