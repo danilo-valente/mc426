@@ -13,7 +13,8 @@
             'app.controllers.main.notifications'
         ])
         .run(run)
-        .config(config);
+        .config(config)
+        .constant('API_ENDPOINT', 'http://10.0.0.2');
 
     function run($ionicPlatform) {
         $ionicPlatform.ready(function () {
