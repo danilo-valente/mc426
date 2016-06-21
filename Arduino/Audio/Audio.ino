@@ -33,3 +33,7 @@ void loop() {
     
 }
 
+void desativar(){
+  digitalWrite(pwmPin, LOW);
+}
+

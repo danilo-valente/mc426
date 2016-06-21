@@ -5,15 +5,15 @@
 
 DHT dht(DHTPIN, DHTTYPE);
 
-int rele = 46;
-int ledPin = 28;                // choose the pin for the LED
+int releAque = 38;
+int releVent = 40;
 int inputPin = 52;               // choose the input pin (for PIR sensor)
 float temp = 0.0;
 float hum = 0.0;
 void setup(){
 
-  pinMode(rele, OUTPUT);
-  pinMode(ledPin, OUTPUT);      // declare LED as output
+  pinMode(releAque, OUTPUT);
+  pinMode(releVent, OUTPUT);
   pinMode(inputPin, INPUT);     // declare sensor as input
   dht.begin();
   Serial.begin(9600);
@@ -38,11 +38,14 @@ void loop()
     Serial.println(" *C");
     delay(1000);
     if(temp <= 25.0){
-        digitalWrite(rele, LOW);
-       digitalWrite(ledPin, HIGH);
+        digitalWrite(releAque, LOW);
     }else{
-      digitalWrite(rele, HIGH);
-      digitalWrite(ledPin, LOW);
+      digitalWrite(releAque, HIGH);
+    }
+    if(temp <= 30.0){
+       digitalWrite(releVent, LOW);
+    }else{
+      digitalWrite(releVent, HIGH);
     }
   }
 }
