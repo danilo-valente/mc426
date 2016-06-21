@@ -9,17 +9,21 @@
 #include "WebServer.h"
 #include "Monitoramento.h"
 #include "Movimento.h"
+#include "Audio.h"
+#include "Gas.h"
 
 #define DEBUG
 
 #define PORT 80
 #define BAUD 9600
 
-#define PIN_PIR     3
-#define PIN_LIGHT_1 6
-#define PIN_LIGHT_2 7
-#define PIN_LIGHT_3 8
-#define PIN_LIGHT_4 9
+#define PIN_GAS     A0
+#define PIN_AUDIO    3
+#define PIN_PIR      5
+#define PIN_LIGHT_1  6
+#define PIN_LIGHT_2  7
+#define PIN_LIGHT_3  8
+#define PIN_LIGHT_4  9
 
 #define EP_TURN_ON_LIGHT_1 "/lampada/acender?id=1"
 #define EP_TURN_OFF_LIGHT_1 "/lampada/apagar?id=1"
@@ -32,12 +36,21 @@
 #define EP_ENABLE_MONITORING "/monit/ativar"
 #define EP_DISABLE_MONITORING "/monit/desativar"
 
+#define AUDIO_FREQUENCY 4
+#define AUDIO_MAX_VALUE 510
+
+#define GAS_MIN_VALUE 250
+
 Lampada light1(PIN_LIGHT_1);
 Lampada light2(PIN_LIGHT_2);
 Lampada light3(PIN_LIGHT_3);
 Lampada light4(PIN_LIGHT_4);
 
-Movimento pir(PIN_PIR, &light1);
+Audio audio(PIN_AUDIO, AUDIO_FREQUENCY, AUDIO_MAX_VALUE);
+
+Gas gas(PIN_GAS, GAS_MIN_VALUE, &audio, &light1);
+
+Movimento pir(PIN_PIR, &light4);
 
 Monitoramento monitoring;
 
@@ -74,12 +87,14 @@ void setup() {
     server.setup();
 
     monitoring.addDevice(&pir);
+    monitoring.addDevice(&gas);
     monitoring.setup();
 }
 
 void loop() {
     server.loop();
     monitoring.loop();
+
 #ifdef DEBUG
     readAll();
     delay(1000);

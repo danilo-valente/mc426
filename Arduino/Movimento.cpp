@@ -15,13 +15,11 @@ Movimento::~Movimento() {
 }
 
 void Movimento::setup() {
-    Serial.println("Movimento::setup");
     pinMode(pinPir, INPUT);
     digitalWrite(pinPir, LOW);
 }
 
 void Movimento::loop() {
-    Serial.println("Movimento::loop");
     if (digitalRead(pinPir) == HIGH) {
         if (state == LOW) {
             light->acender();

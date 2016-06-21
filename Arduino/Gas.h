@@ -1,27 +1,24 @@
-/*
- * Gas.h
- *
- *  Created on: 16 de jun de 2016
- *      Author: Menf
- */
-
 #ifndef GAS_H
 #define GAS_H
 
 #include <Arduino.h>
 
 #include "Device.h"
+#include "Audio.h"
+#include "Lampada.h"
 
-class Gas : Device {
+class Gas : public Device {
 private:
     uint8_t pinGas;
+    uint32_t minValue;
+    Audio *audio;
+    Lampada *light;
 public:
-    Gas(uint8_t pinGas);
+    Gas(uint8_t pinGas, uint32_t minValue, Audio *audio, Lampada *light);
     virtual ~Gas();
     
     void setup();
     void loop();
-    int readGas();
 };
 
 #endif /* GAS_H */

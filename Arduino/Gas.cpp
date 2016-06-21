@@ -7,20 +7,24 @@
 
 #include "Gas.h"
 
-Gas::Gas(uint8_t pinGas) : pinGas(pinGas) {
+Gas::Gas(uint8_t pinGas, uint32_t minValue, Audio *audio, Lampada *light) : pinGas(pinGas), minValue(minValue), audio(audio), light(light) {
 }
 
 Gas::~Gas() {
 }
 
 void Gas::setup() {
-  pinMode(pinGas, INPUT);
+    pinMode(pinGas, INPUT);
 }
 
 void Gas::loop() {
-  // TODO
-}
-
-int Gas::readGas(){
-	return analogRead(pinGas);
+    uint32_t value = analogRead(pinGas);
+    if (value > minValue) {
+        audio->ativar();
+        light->acender();
+    } else {
+        audio->desativar();
+        light->apagar();
+    }
+    audio->loop();
 }
