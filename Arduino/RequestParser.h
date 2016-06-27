@@ -1,26 +1,18 @@
 #ifndef REQUEST_PARSER_H
 #define REQUEST_PARSER_H
 
-#include <map>
+using namespace std;
 #include <string>
-#include <regex>
 #include <cstring>
-#include <iostream>
-#include <Ethernet>
 
-#include "Request.h"
-
-#define STRING_BUFFER_SIZE 128
-
-typedef char BUFFER[STRING_BUFFER_SIZE];
 
 class RequestParser {
 public:
-    Request& parse(EthernetClient& client);
-  	RequestParser();
+    string parse(string& param);
+  	RequestParser(char* request);
   	virtual ~RequestParser();
 private:
-    void getNextHttpLine(EthernetClient& client, BUFFER& readBuffer);
+    char* request;
 };
 
 #endif /* REQUEST_PARSER_H */
