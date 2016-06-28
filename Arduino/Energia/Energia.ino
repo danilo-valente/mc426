@@ -21,9 +21,11 @@ void loop()
   Irms = Irms/5; // fio passa 5 vezes no sensor, aumenta a precisão! (quanto mais vezes, melhor)
   
   Serial.print(Irms);// Apparent power
-  Serial.print("\t");
+  Serial.print("\t"); 
 
-  volt = volt - 90; // pela montagem ta pegando duas fases, entao aqui desconto uma fase
+  if(volt > 90){
+    volt = volt - 90; // pela montagem ta pegando duas fases, entao aqui desconto uma fase
+  }
   
   Serial.print(volt);// Voltagem
   Serial.print("\t");
