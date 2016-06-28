@@ -11,18 +11,30 @@
 #include <Arduino.h>
 #include <DHT.h>
 
-class TempHum {
+#include "Device.h"
+
+class TempHum : public Device {
 private:
-	uint8_t pinHum;
-	uint8_t typeHum;
-	DHT *dht;
+  	uint8_t pinDHT;
+  	uint8_t typeDHT;
+    uint8_t pinHeater;
+    uint8_t pinFan;
+    float maxTHeater;
+    float minTFan;
+  	DHT *dht;
+    float temperature;
+    float humidity;
 public:
-	TempHum(uint8_t pinHum, uint8_t typeHum);
-	virtual ~TempHum();
+  	TempHum(uint8_t pinDHT, uint8_t typeDHT, uint8_t pinHeater, uint8_t pinFan, float maxTHeater, float minTFan);
+  	virtual ~TempHum();
 
-	float readTemperature();
-	float readHumidity();
-
+    void setup();
+    void loop();
+    uint8_t pin();
+    uint8_t type();
+    
+  	float getTemperature();
+  	float getHumidity();
 };
 
 #endif /* TEMPHUM_H */

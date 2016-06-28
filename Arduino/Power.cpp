@@ -17,12 +17,12 @@ void Power::setup() {
     power = 0;
     total = 0;
     totalKWh = 0;
-    emon.current(emonPin, calibration);       // Current: input pin, calibration.
+    emon.current(emonPin, calibration);
 }
 
 void Power::loop() {
-    double irms = emon.calcIrms(samples);
     double volt = analogRead(powerPin);
+    double irms = volt > 0 ? emon.calcIrms(samples) : 0;
     
     irms /= precision; // fio passa 5 vezes no sensor, aumenta a precisão! (quanto mais vezes, melhor)
     

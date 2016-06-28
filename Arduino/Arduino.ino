@@ -20,6 +20,7 @@
 #include "Tank.h"
 #include "Flame.h"
 #include "Power.h"
+#include "TempHum.h"
 
 //#define DEBUG
 
@@ -39,19 +40,25 @@
 #define PIN_LIGHT_4 33
 #define PIN_FLAME   39
 #define PIN_TANK    41
+#define PIN_DHT     52
+#define PIN_HEATER  38
+#define PIN_FAN     40
 #elif defined(__AVR_ATmega328__) || defined(__AVR_ATmega328P__)
 #define PINS        13
 #define PIN_GAS     A0
 #define PIN_POWER_1 A1
 #define PIN_POWER_2 A2
-#define PIN_AUDIO    3
-#define PIN_PIR      4
-#define PIN_LIGHT_1  5
-#define PIN_LIGHT_2  6
-#define PIN_LIGHT_3  7
-#define PIN_LIGHT_4  8
-#define PIN_FLAME    9
-#define PIN_TANK    10
+#define PIN_AUDIO    2
+#define PIN_PIR      3
+#define PIN_LIGHT_1  4
+#define PIN_LIGHT_2  5
+#define PIN_LIGHT_3  6
+#define PIN_LIGHT_4  7
+#define PIN_FLAME    8
+#define PIN_TANK     9
+#define PIN_DHT     10
+#define PIN_HEATER  11
+#define PIN_FAN     12
 #endif
 
 #define AUDIO_FREQUENCY 4
@@ -65,6 +72,10 @@
 #define POWER_SAMPLES 1480
 #define POWER_SCALE 3600000
 #define POWER_PRECISION 5
+
+#define DHT_TYPE DHT11
+#define DHT_MAX_T_HEATER 20
+#define DHT_MIN_T_FAN 30
 
 // Endpoints
 const char EP_AUTH[] = "a";
@@ -93,6 +104,7 @@ Movimento pir(PIN_PIR, PIR_MIN_VALUE, &audio, &light1);
 Tank tank(PIN_TANK, &audio);
 Flame flame(PIN_FLAME, &audio);
 Power power(PIN_POWER_1, PIN_POWER_2, POWER_CALIBRATION, POWER_SAMPLES, POWER_SCALE, POWER_PRECISION);
+TempHum tempHum(PIN_DHT, DHT_TYPE, PIN_HEATER, PIN_FAN, DHT_MAX_T_HEATER, DHT_MIN_T_FAN);
 
 Monitoramento monitoring;
 
@@ -127,6 +139,7 @@ void setup() {
     devices.add(&tank);
     devices.add(&flame);
     devices.add(&power);
+    devices.add(&tempHum);
     devices.setup();
 
     server.registerHandler(EP_AUTH, &authHandler);

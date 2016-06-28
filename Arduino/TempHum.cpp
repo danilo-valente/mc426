@@ -7,19 +7,68 @@
 
 #include "TempHum.h"
 
-TempHum::TempHum(uint8_t pinHum, uint8_t typeHum) : pinHum(pinHum), typeHum(typeHum) {
-    pinMode(pinHum, INPUT);
-    dht = new DHT(pinHum, typeHum);
-    dht->begin();
+TempHum::TempHum(uint8_t pinDHT, uint8_t typeDHT, uint8_t pinHeater, uint8_t pinFan, float minTFan, float maxTHeater) : pinDHT(pinDHT),
+                                                                                                                        typeDHT(typeDHT),
+                                                                                                                        pinHeater(pinHeater),
+                                                                                                                        pinFan(pinFan),
+                                                                                                                        maxTHeater(maxTHeater),
+                                                                                                                        minTFan(minTFan) {
 }
 
 TempHum::~TempHum() {
 }
 
-float TempHum::readHumidity() {
-    return dht->readHumidity();
+void TempHum::setup() {
+    if (dht) {
+        delete dht;
+    }
+
+    temperature = 0;
+    humidity = 0;
+    
+    pinMode(pinDHT, INPUT);
+    pinMode(pinHeater, OUTPUT);
+    pinMode(pinFan, OUTPUT);
+    dht = new DHT(pinDHT, typeDHT);
+    dht->begin();
 }
 
-float TempHum::readTemperature() {
-    return dht->readTemperature();
+void TempHum::loop() {
+    temperature = dht->readTemperature();
+    
+    if (isnan(temperature))  {
+        Serial.println("Failed to read from DHT");
+    } else {
+        Serial.print("Temperature: ");
+        Serial.print(temperature);
+        Serial.println(" ºC");
+        
+        digitalWrite(pinHeater, temperature <= maxTHeater ? LOW : HIGH);
+        digitalWrite(pinFan, temperature >= minTFan ? LOW : HIGH);
+    }
+    
+    humidity = dht->readHumidity();
+    if (isnan(humidity))  {
+        Serial.println("Failed to read from DHT");
+    } else {
+        Serial.print("Humidity: ");
+        Serial.println(humidity);
+    }
 }
+
+uint8_t TempHum::pin() {
+    return pinDHT;
+}
+
+uint8_t TempHum::type() {
+    return Device::TEMP_HUM;
+}
+
+float TempHum::getTemperature() {
+    return temperature;
+}
+
+float TempHum::getHumidity() {
+    return humidity;
+}
+
