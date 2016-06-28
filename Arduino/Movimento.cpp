@@ -8,14 +8,14 @@
 #include "Movimento.h"
 
 Movimento::Movimento(uint8_t pinPir, uint16_t minValue, Audio *audio, Lampada *light) : pinPir(pinPir), minValue(minValue), audio(audio), light(light) {
-    state = false;
-    value = 0;
 }
 
 Movimento::~Movimento() {
 }
 
 void Movimento::setup() {
+    state = false;
+    value = 0;
     pinMode(pinPir, INPUT);
     digitalWrite(pinPir, LOW);
 }

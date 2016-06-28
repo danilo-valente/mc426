@@ -8,13 +8,13 @@
 #include "Gas.h"
 
 Gas::Gas(uint8_t pinGas, uint16_t minValue, Audio *audio, Lampada *light) : pinGas(pinGas), minValue(minValue), audio(audio), light(light) {
-    state = false;
 }
 
 Gas::~Gas() {
 }
 
 void Gas::setup() {
+    state = false;
     pinMode(pinGas, INPUT);
 }
 

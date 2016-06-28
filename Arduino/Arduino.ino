@@ -17,8 +17,9 @@
 #include "Movimento.h"
 #include "Audio.h"
 #include "Gas.h"
+#include "Tank.h"
 
-#define DEBUG
+//#define DEBUG
 
 #define PORT 80
 #define BAUD 9600
@@ -32,6 +33,7 @@
 #define PIN_LIGHT_2  31
 #define PIN_LIGHT_3  32
 #define PIN_LIGHT_4  33
+#define PIN_TANK     41
 #elif defined(__AVR_ATmega328__) || defined(__AVR_ATmega328P__)
 #define PINS         13
 #define PIN_GAS      A0
@@ -41,6 +43,7 @@
 #define PIN_LIGHT_2   6
 #define PIN_LIGHT_3   7
 #define PIN_LIGHT_4   8
+#define PIN_TANK      9
 #endif
 
 #define AUDIO_FREQUENCY 4
@@ -77,6 +80,8 @@ Gas gas(PIN_GAS, GAS_MIN_VALUE, &audio, &light2);
 
 Movimento pir(PIN_PIR, PIR_MIN_VALUE, &audio, &light1);
 
+Tank tank(PIN_TANK, &audio);
+
 Monitoramento monitoring;
 
 // Handlers
@@ -90,6 +95,7 @@ MonitoringStatusHandler monitoringStatusHandler(&monitoring);
 EnableMonitoringHandler enableMonitoringHandler(&monitoring);
 DisableMonitoringHandler disableMonitoringHandler(&monitoring);
 
+// WebServer
 const uint8_t mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
 IPAddress ip(10, 0, 0, 2);
 WebServer server(PORT, mac, ip);
@@ -99,6 +105,8 @@ void setup() {
     while (!Serial);
 
     authHandler.addUser(&adminUser);
+
+    audio.setup();
 
     devices.add(&light1);
     devices.add(&light2);
@@ -117,6 +125,7 @@ void setup() {
 
     monitoring.addDevice(&pir);
     monitoring.addDevice(&gas);
+    monitoring.addDevice(&tank);
     monitoring.setup();
 }
 
