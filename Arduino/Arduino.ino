@@ -18,6 +18,7 @@
 #include "Audio.h"
 #include "Gas.h"
 #include "Tank.h"
+#include "Flame.h"
 
 //#define DEBUG
 
@@ -25,25 +26,27 @@
 #define BAUD 9600
 
 #if defined(__AVR_ATmega2560__)
-#define PINS         52
-#define PIN_GAS      A0
-#define PIN_AUDIO     3
-#define PIN_PIR      22
-#define PIN_LIGHT_1  30
-#define PIN_LIGHT_2  31
-#define PIN_LIGHT_3  32
-#define PIN_LIGHT_4  33
-#define PIN_TANK     41
+#define PINS        52
+#define PIN_GAS     A0
+#define PIN_AUDIO    3
+#define PIN_PIR     22
+#define PIN_LIGHT_1 30
+#define PIN_LIGHT_2 31
+#define PIN_LIGHT_3 32
+#define PIN_LIGHT_4 33
+#define PIN_FLAME   39
+#define PIN_TANK    41
 #elif defined(__AVR_ATmega328__) || defined(__AVR_ATmega328P__)
-#define PINS         13
-#define PIN_GAS      A0
-#define PIN_AUDIO     3
-#define PIN_PIR       4
-#define PIN_LIGHT_1   5
-#define PIN_LIGHT_2   6
-#define PIN_LIGHT_3   7
-#define PIN_LIGHT_4   8
-#define PIN_TANK      9
+#define PINS        13
+#define PIN_GAS     A0
+#define PIN_AUDIO    3
+#define PIN_PIR      4
+#define PIN_LIGHT_1  5
+#define PIN_LIGHT_2  6
+#define PIN_LIGHT_3  7
+#define PIN_LIGHT_4  8
+#define PIN_FLAME    9
+#define PIN_TANK    10
 #endif
 
 #define AUDIO_FREQUENCY 4
@@ -81,6 +84,8 @@ Gas gas(PIN_GAS, GAS_MIN_VALUE, &audio, &light2);
 Movimento pir(PIN_PIR, PIR_MIN_VALUE, &audio, &light1);
 
 Tank tank(PIN_TANK, &audio);
+
+Flame flame(PIN_FLAME, &audio);
 
 Monitoramento monitoring;
 
@@ -126,6 +131,7 @@ void setup() {
     monitoring.addDevice(&pir);
     monitoring.addDevice(&gas);
     monitoring.addDevice(&tank);
+    monitoring.addDevice(&flame);
     monitoring.setup();
 }
 
