@@ -17,6 +17,7 @@ public:
     static const uint8_t MOVEMENT = 6;
     static const uint8_t TANK = 7;
     static const uint8_t FLAME = 8;
+    static const uint8_t POWER = 9;
 };
 
 #endif /* DEVICE_H */

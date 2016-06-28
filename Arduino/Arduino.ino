@@ -19,6 +19,7 @@
 #include "Gas.h"
 #include "Tank.h"
 #include "Flame.h"
+#include "Power.h"
 
 //#define DEBUG
 
@@ -28,6 +29,8 @@
 #if defined(__AVR_ATmega2560__)
 #define PINS        52
 #define PIN_GAS     A0
+#define PIN_POWER_1 A1
+#define PIN_POWER_2 A2
 #define PIN_AUDIO    3
 #define PIN_PIR     22
 #define PIN_LIGHT_1 30
@@ -39,6 +42,8 @@
 #elif defined(__AVR_ATmega328__) || defined(__AVR_ATmega328P__)
 #define PINS        13
 #define PIN_GAS     A0
+#define PIN_POWER_1 A1
+#define PIN_POWER_2 A2
 #define PIN_AUDIO    3
 #define PIN_PIR      4
 #define PIN_LIGHT_1  5
@@ -55,6 +60,11 @@
 #define GAS_MIN_VALUE 250
 
 #define PIR_MIN_VALUE 500
+
+#define POWER_CALIBRATION 93
+#define POWER_SAMPLES 1480
+#define POWER_SCALE 3600000
+#define POWER_PRECISION 5
 
 // Endpoints
 const char EP_AUTH[] = "a";
@@ -78,14 +88,11 @@ Lampada light3(PIN_LIGHT_3);
 Lampada light4(PIN_LIGHT_4);
 
 Audio audio(PIN_AUDIO, AUDIO_FREQUENCY, AUDIO_MAX_VALUE);
-
 Gas gas(PIN_GAS, GAS_MIN_VALUE, &audio, &light2);
-
 Movimento pir(PIN_PIR, PIR_MIN_VALUE, &audio, &light1);
-
 Tank tank(PIN_TANK, &audio);
-
 Flame flame(PIN_FLAME, &audio);
+Power power(PIN_POWER_1, PIN_POWER_2, POWER_CALIBRATION, POWER_SAMPLES, POWER_SCALE, POWER_PRECISION);
 
 Monitoramento monitoring;
 
@@ -111,12 +118,15 @@ void setup() {
 
     authHandler.addUser(&adminUser);
 
-    audio.setup();
-
     devices.add(&light1);
     devices.add(&light2);
     devices.add(&light3);
     devices.add(&light4);
+    devices.add(&audio);
+    devices.add(&gas);
+    devices.add(&tank);
+    devices.add(&flame);
+    devices.add(&power);
     devices.setup();
 
     server.registerHandler(EP_AUTH, &authHandler);
@@ -129,9 +139,6 @@ void setup() {
     server.setup();
 
     monitoring.addDevice(&pir);
-    monitoring.addDevice(&gas);
-    monitoring.addDevice(&tank);
-    monitoring.addDevice(&flame);
     monitoring.setup();
 }
 
