@@ -4,55 +4,48 @@
 
     angular
         .module('app.components.api.security', [])
-        .service('alarmApi', ['$q', '$http', 'API_ENDPOINT', AlarmApi]);
-        //.service('alarmApi', ['$q', AlarmApiMockup]);
+        .service('alarmApi', ['$http', 'API_ENDPOINT', AlarmApi])
+        .service('authApi', ['$http', 'API_ENDPOINT', AuthApi]);
 
-    function AlarmApi($q, $http, API_ENDPOINT) {
-
-        var $alarmStatus = false;
+    function AlarmApi($http, API_ENDPOINT) {
 
         this.getStatus = function () {
-            var deferred = $q.defer();
-            deferred.resolve($alarmStatus);
-            return deferred.promise;
+            return $http.get(API_ENDPOINT + '/ms').then(function (response) {
+                return response.data.status;
+            });
         };
 
         this.enable = function () {
             return $http.get(API_ENDPOINT + '/me').then(function (response) {
-                $alarmStatus = response.data.status;
                 return response.data.status;
             });
         };
 
         this.disable = function () {
             return $http.get(API_ENDPOINT + '/md').then(function (response) {
-                $alarmStatus = response.data.status;
                 return response.data.status;
             });
         };
 
         this.toggle = function () {
-            if ($alarmStatus) {
-                return this.disable();
-            }
+            var that = this;
 
-            return this.enable();
+            return this.getStatus().then(function (status) {
+                if (status) {
+                    return that.disable();
+                }
+
+                return that.enable();
+            });
         };
     }
 
-    function AlarmApiMockup($q) {
+    function AuthApi($http, API_ENDPOINT) {
 
-        var $alarmStatus = false;
-
-        this.getStatus = function () {
-            var deferred = $q.defer();
-            deferred.resolve($alarmStatus);
-            return deferred.promise;
-        };
-
-        this.toggle = function () {
-            $alarmStatus = !$alarmStatus;
-            return this.getStatus();
+        this.auth = function (username, password) {
+            return $http.get(API_ENDPOINT + '/a', { u: username, p: password }).then(function (response) {
+                return response.data;
+            });
         };
     }
 

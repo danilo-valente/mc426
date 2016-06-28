@@ -4,9 +4,7 @@
 
     angular
         .module('app.controllers.main', ['app.components.api.notifications'])
-        .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
-
-            $urlRouterProvider.otherwise('/main/menu');
+        .config(['$stateProvider', function ($stateProvider) {
 
             $stateProvider
                 .state('main', {

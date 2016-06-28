@@ -5,6 +5,7 @@
     angular
         .module('app', [
             'ionic',
+            'app.controllers.login',
             'app.controllers.main',
             'app.controllers.main.menu',
             'app.controllers.main.menu.map',
@@ -29,8 +30,9 @@
         });
     }
 
-    function config($ionicConfigProvider) {
+    function config($ionicConfigProvider, $urlRouterProvider) {
         $ionicConfigProvider.backButton.text('Voltar');
+        $urlRouterProvider.otherwise('/login');
     }
 
 })(window.angular);

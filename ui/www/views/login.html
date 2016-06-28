@@ -1,0 +1,21 @@
+<ion-view view-title="Login">
+    <ion-content>
+        <div class="list">
+            <label class="item item-input">
+                <span class="input-label">Usuário</span>
+                <input type="text" ng-model="login.username">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Senha</span>
+                <input type="password" ng-model="login.password">
+            </label>
+        </div>
+        <div class="padding">
+            <button class="button button-block button-positive"
+                    ng-click="auth(login.username, login.password)">Entrar</button>
+
+            <p class="text-center assertive"
+               ng-if="error !== 0">{{ error === 400 ? 'Usuário ou senha incorretos' : 'Erro desconhecido' }}</p>
+        </div>
+    </ion-content>
+</ion-view>
