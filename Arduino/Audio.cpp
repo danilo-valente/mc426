@@ -1,6 +1,6 @@
 #include "Audio.h"
 
-Audio::Audio(uint8_t pwmPin, uint32_t freq, uint32_t maxVal) : pwmPin(pwmPin), freq(freq), maxVal(maxVal) {
+Audio::Audio(uint8_t pwmPin, uint16_t freq, uint16_t maxVal) : pwmPin(pwmPin), freq(freq), maxVal(maxVal) {
     val2 = 0;
     ativado = false;
     flag = false;
@@ -36,11 +36,21 @@ void Audio::loop() {
     }
 }
 
+uint8_t Audio::pin() {
+    return pwmPin;
+}
+
+uint8_t Audio::type() {
+    return Device::AUDIO;
+}
+
 void Audio::desativar() {
+    Serial.println("Alarm disabled");
     ativado = false;
 }
 
 void Audio::ativar() {
+    Serial.println("Alarm enabled");
     ativado = true;
 }
 

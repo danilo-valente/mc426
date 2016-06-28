@@ -16,19 +16,25 @@ Monitoramento::~Monitoramento() {
 }
 
 void Monitoramento::setup() {
-    int i;
-    for (i = 0; i < count; i++) {
+    for (uint8_t i = 0; i < count; i++) {
         devices[i]->setup();
     }
 }
 
 void Monitoramento::loop() {
-    int i;
     if (status) {
-        for (i = 0; i < count; i++) {
+        for (uint8_t i = 0; i < count; i++) {
             devices[i]->loop();
         }
     }
+}
+
+uint8_t Monitoramento::pin() {
+    return (uint8_t) -1;
+}
+
+uint8_t Monitoramento::type() {
+    return Device::MONITORING;
 }
 
 void Monitoramento::addDevice(Device *device) {
@@ -53,6 +59,7 @@ bool Monitoramento::ativar() {
         return false;
     }
 
+    Serial.println("Monitoring enabled");
     status = true;
     return true;
 }
@@ -67,6 +74,7 @@ bool Monitoramento::desativar() {
         return false;
     }
 
+    Serial.println("Monitoring disabled");
     status = false;
     return true;
 }

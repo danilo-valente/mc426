@@ -10,15 +10,18 @@
 class Gas : public Device {
 private:
     uint8_t pinGas;
-    uint32_t minValue;
+    uint16_t minValue;
     Audio *audio;
     Lampada *light;
+    bool state;
 public:
-    Gas(uint8_t pinGas, uint32_t minValue, Audio *audio, Lampada *light);
+    Gas(uint8_t pinGas, uint16_t minValue, Audio *audio, Lampada *light);
     virtual ~Gas();
     
     void setup();
     void loop();
+    uint8_t pin();
+    uint8_t type();
 };
 
 #endif /* GAS_H */

@@ -6,7 +6,7 @@ NotFoundHandler::NotFoundHandler() {
 NotFoundHandler::~NotFoundHandler() {
 }
 
-void NotFoundHandler::handle(EthernetClient client) {
+void NotFoundHandler::handle(EthernetClient client, RequestParser& requestParser) {
     JsonObject& json = toJson();
     json.printTo(client);
 }

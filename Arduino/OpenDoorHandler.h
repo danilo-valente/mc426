@@ -5,6 +5,7 @@
 #include <ArduinoJson.h>
 
 #include "EndpointHandler.h"
+#include "RequestParser.h"
 #include "Porta.h"
 
 class OpenDoorHandler : public EndpointHandler {
@@ -13,7 +14,7 @@ private:
 public:
     OpenDoorHandler(Porta *porta);
     virtual ~OpenDoorHandler();
-    virtual void handle(EthernetClient client);
+    virtual void handle(EthernetClient client, RequestParser& requestParser);
     virtual JsonObject& toJson();
 };
 

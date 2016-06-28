@@ -14,10 +14,10 @@
 class TempHum {
 private:
 	uint8_t pinHum;
-	int typeHum;
+	uint8_t typeHum;
 	DHT *dht;
 public:
-	TempHum(uint8_t pinHum, int typeHum);
+	TempHum(uint8_t pinHum, uint8_t typeHum);
 	virtual ~TempHum();
 
 	float readTemperature();

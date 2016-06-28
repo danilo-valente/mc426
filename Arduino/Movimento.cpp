@@ -7,8 +7,9 @@
 
 #include "Movimento.h"
 
-Movimento::Movimento(uint8_t pinPir, Lampada *light) : pinPir(pinPir), light(light) {
-    state = LOW;
+Movimento::Movimento(uint8_t pinPir, uint16_t minValue, Audio *audio, Lampada *light) : pinPir(pinPir), minValue(minValue), audio(audio), light(light) {
+    state = false;
+    value = 0;
 }
 
 Movimento::~Movimento() {
@@ -21,16 +22,35 @@ void Movimento::setup() {
 
 void Movimento::loop() {
     if (digitalRead(pinPir) == HIGH) {
-        if (state == LOW) {
+        if (value == 0) {
+            Serial.println("Motion started!");
+        }
+        if (!state && value >= minValue) {
+            audio->ativar();
             light->acender();
             Serial.println("Motion detected!");
-            state = HIGH;
+            state = true;
+        }
+        if (value < minValue) {
+            value++;
         }
     } else {
-        if (state == HIGH) {
+        if (state) {
+            audio->desativar();
             light->apagar();
             Serial.println("Motion ended!");
-            state = LOW;
+            state = false;
         }
+        value = 0;
     }
+    audio->loop();
 }
+
+uint8_t Movimento::pin() {
+    return pinPir;
+}
+
+uint8_t Movimento::type() {
+    return Device::MOVEMENT;
+}
+

@@ -7,14 +7,32 @@
 
 #include "Lampada.h"
 
-Lampada::Lampada(uint8_t pinRele): pinRele(pinRele) {
+Lampada::Lampada(uint8_t pinRelay): pinRelay(pinRelay) {
     acesa = false;
-
-    pinMode(pinRele, OUTPUT);
-    digitalWrite(pinRele, HIGH);
 }
 
 Lampada::~Lampada() {
+}
+
+void Lampada::setup() {
+    pinMode(pinRelay, OUTPUT);
+    digitalWrite(pinRelay, HIGH);
+}
+
+void Lampada::loop() {
+    if (acesa) {
+        digitalWrite(pinRelay, LOW);
+    } else {
+        digitalWrite(pinRelay, HIGH);
+    }
+}
+
+uint8_t Lampada::pin() {
+    return pinRelay;
+}
+
+uint8_t Lampada::type() {
+    return Device::LIGHT;
 }
 
 bool Lampada::estaAcesa() {
@@ -27,7 +45,7 @@ bool Lampada::estaAcesa() {
  * Se estiver desligada, liga e retorna true
  */
 bool Lampada::acender() {
-    digitalWrite(pinRele, LOW);
+    digitalWrite(pinRelay, LOW);
 
     if (!acesa) {
         acesa = true;
@@ -43,7 +61,7 @@ bool Lampada::acender() {
  * Se estiver ligada, apaga e retorna true
  */
 bool Lampada::apagar() {
-    digitalWrite(pinRele, HIGH);
+    digitalWrite(pinRelay, HIGH);
 
     if (acesa) {
         acesa = false;

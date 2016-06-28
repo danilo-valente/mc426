@@ -8,18 +8,21 @@
 class Audio : public Device {
 private:
     uint8_t pwmPin;
-    uint32_t freq;
-    uint32_t maxVal;
-    uint32_t val2; // variable to store the read value
+    uint16_t freq;
+    uint16_t maxVal;
+    uint16_t val2; // variable to store the read value
     bool ativado;
     bool flag;
 
 public:
-    Audio(uint8_t pwmPin, uint32_t freq, uint32_t maxVal);
+    Audio(uint8_t pwmPin, uint16_t freq, uint16_t maxVal);
     virtual ~Audio();
     
     void setup();
     void loop();
+    uint8_t pin();
+    uint8_t type();
+    
     void desativar();
     void ativar();
 };

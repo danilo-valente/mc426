@@ -3,18 +3,25 @@
 
 #include <Arduino.h>
 
-class Lampada {
-private:
-	bool acesa;
-	uint8_t pinRele;
-public:
-	Lampada(uint8_t pinRele);
-	virtual ~Lampada();
+#include "Device.h"
 
-	bool estaAcesa();
-	bool acender();
-	bool apagar();
-	String toString();
+class Lampada : public Device {
+private:
+  	bool acesa;
+  	uint8_t pinRelay;
+public:
+  	Lampada(uint8_t pinRelay);
+  	virtual ~Lampada();
+  
+    void setup();
+    void loop();
+    uint8_t pin();
+    uint8_t type();
+  
+  	bool estaAcesa();
+  	bool acender();
+  	bool apagar();
+  	String toString();
 };
 
 #endif /* LAMPADA_H_ */

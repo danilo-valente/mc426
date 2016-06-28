@@ -5,6 +5,7 @@
 #include <ArduinoJson.h>
 
 #include "EndpointHandler.h"
+#include "RequestParser.h"
 #include "Monitoramento.h"
 
 class EnableMonitoringHandler : public EndpointHandler {
@@ -13,7 +14,7 @@ private:
 public:
     EnableMonitoringHandler(Monitoramento *monitoring);
     virtual ~EnableMonitoringHandler();
-    virtual void handle(EthernetClient client);
+    virtual void handle(EthernetClient client, RequestParser& requestParser);
     virtual JsonObject& toJson();
 };
 

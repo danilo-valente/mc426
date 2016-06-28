@@ -18,14 +18,16 @@
         };
 
         this.enable = function () {
-            return $http.get(API_ENDPOINT + '/monit/ativar').then(function (response) {
-                return response.status;
+            return $http.get(API_ENDPOINT + '/me').then(function (response) {
+                $alarmStatus = response.data.status;
+                return response.data.status;
             });
         };
 
         this.disable = function () {
-            return $http.get(API_ENDPOINT + '/monit/desativar').then(function (response) {
-                return response.status;
+            return $http.get(API_ENDPOINT + '/md').then(function (response) {
+                $alarmStatus = response.data.status;
+                return response.data.status;
             });
         };
 

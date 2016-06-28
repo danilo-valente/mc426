@@ -7,7 +7,7 @@
 
 #include "TempHum.h"
 
-TempHum::TempHum(uint8_t pinHum, int typeHum) : pinHum(pinHum), typeHum(typeHum) {
+TempHum::TempHum(uint8_t pinHum, uint8_t typeHum) : pinHum(pinHum), typeHum(typeHum) {
     pinMode(pinHum, INPUT);
     dht = new DHT(pinHum, typeHum);
     dht->begin();

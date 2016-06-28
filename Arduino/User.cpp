@@ -1,6 +1,6 @@
 #include "User.h"
 
-User::User(String login, String senha, String nome) : login(login), senha(senha), nome(nome) {
+User::User(String username, String password, String name) : username(username), password(password), name(name) {
 }
 
 User::~User() {

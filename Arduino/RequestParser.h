@@ -1,18 +1,17 @@
 #ifndef REQUEST_PARSER_H
 #define REQUEST_PARSER_H
 
-using namespace std;
-#include <string>
-#include <cstring>
-
+#include <Arduino.h>
 
 class RequestParser {
-public:
-    string parse(string& param);
-  	RequestParser(char* request);
-  	virtual ~RequestParser();
 private:
-    char* request;
+    String request;
+public:
+  	RequestParser();
+  	virtual ~RequestParser();
+    void setRequest(String& request);
+    String get(const char *param);
+    String get(String& param);
 };
 
 #endif /* REQUEST_PARSER_H */

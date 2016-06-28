@@ -23,10 +23,10 @@
             var that = this;
             return this.getStatus(id).then(function (status) {
                 if (status) {
-                    return that.open(id);
+                    return that.close(id);
                 }
 
-                return that.close(id);
+                return that.open(id);
             });
         };
 
@@ -44,9 +44,9 @@
     function LightsApi($q, $http, API_ENDPOINT, devices) {
 
         this.getStatus = function (id) {
-            var deferred = $q.defer();
-            deferred.resolve(findObject(parseInt(id)).status);
-            return deferred.promise;
+            return $http.get(API_ENDPOINT + '/ls?i=' + id).then(function (response) {
+                return response.data.acesa;
+            });
         };
 
         this.toggle = function (id) {
@@ -54,22 +54,22 @@
             return this.getStatus(id).then(function (status) {
                 findObject(parseInt(id)).status = status;
                 if (status) {
-                    return that.open(id);
+                    return that.close(id);
                 }
 
-                return that.close(id);
+                return that.open(id);
             });
         };
 
         this.open = function (id) {
-            return $http.get(API_ENDPOINT + '/lampada/acender?id=' + id).then(function (response) {
-                return response.acesa;
+            return $http.get(API_ENDPOINT + '/le?i=' + id).then(function (response) {
+                return response.data.acesa;
             });
         };
 
         this.close = function (id) {
-            return $http.get(API_ENDPOINT + '/lampada/apagar?id=' + id).then(function (response) {
-                return response.acesa;
+            return $http.get(API_ENDPOINT + '/ld?i=' + id).then(function (response) {
+                return response.data.acesa;
             });
         };
 
@@ -94,10 +94,10 @@
             var that = this;
             return this.getStatus(id).then(function (status) {
                 if (status) {
-                    return that.open(id);
+                    return that.close(id);
                 }
 
-                return that.close(id);
+                return that.open(id);
             });
         };
 

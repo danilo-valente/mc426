@@ -7,7 +7,8 @@
 
 #include "Gas.h"
 
-Gas::Gas(uint8_t pinGas, uint32_t minValue, Audio *audio, Lampada *light) : pinGas(pinGas), minValue(minValue), audio(audio), light(light) {
+Gas::Gas(uint8_t pinGas, uint16_t minValue, Audio *audio, Lampada *light) : pinGas(pinGas), minValue(minValue), audio(audio), light(light) {
+    state = false;
 }
 
 Gas::~Gas() {
@@ -18,13 +19,30 @@ void Gas::setup() {
 }
 
 void Gas::loop() {
-    uint32_t value = analogRead(pinGas);
+    uint16_t value = analogRead(pinGas);
     if (value > minValue) {
-        audio->ativar();
-        light->acender();
+        if (!state) {
+            Serial.println("Smoke detected");
+            state = true;
+            audio->ativar();
+            light->acender();
+        }
     } else {
-        audio->desativar();
-        light->apagar();
+        if (state) {
+            Serial.println("Smoke dissipated");
+            state = false;
+            audio->desativar();
+            light->apagar();
+        }
     }
     audio->loop();
 }
+
+uint8_t Gas::pin() {
+    return pinGas;
+}
+
+uint8_t Gas::type() {
+    return Device::GAS;
+}
+

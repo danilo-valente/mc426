@@ -6,7 +6,7 @@ EnableMonitoringHandler::EnableMonitoringHandler(Monitoramento *monitoring) : mo
 EnableMonitoringHandler::~EnableMonitoringHandler() {
 }
 
-void EnableMonitoringHandler::handle(EthernetClient client) {
+void EnableMonitoringHandler::handle(EthernetClient client, RequestParser& requestParser) {
     monitoring->ativar();
 
     JsonObject& json = toJson();

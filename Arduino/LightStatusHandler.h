@@ -1,5 +1,5 @@
-#ifndef TURN_ON_LIGHT_HANDLER_H
-#define TURN_ON_LIGHT_HANDLER_H
+#ifndef LIGHT_STATUS_HANDLER
+#define LIGHT_STATUS_HANDLER
 
 #include <Ethernet.h>
 #include <ArduinoJson.h>
@@ -9,14 +9,14 @@
 #include "DeviceManager.h"
 #include "Lampada.h"
 
-class TurnOnLightHandler : public EndpointHandler {
+class LightStatusHandler : public EndpointHandler {
 private:
     DeviceManager *devices;
 public:
-    TurnOnLightHandler(DeviceManager *devices);
-    virtual ~TurnOnLightHandler();
+    LightStatusHandler(DeviceManager *devices);
+    virtual ~LightStatusHandler();
     virtual void handle(EthernetClient client, RequestParser& requestParser);
     virtual JsonObject& toJson(Lampada *lampada);
 };
 
-#endif /* TURN_ON_LIGHT_HANDLER_H */
+#endif /* LIGHT_STATUS_HANDLER */

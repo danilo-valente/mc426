@@ -15,13 +15,13 @@ class Sonar {
 private:
     uint8_t pinSonarRead;
     uint8_t pinSonarWrite;
-  	int maxDistance;
+  	uint16_t maxDistance;
   	Ultrasonic *ultrasonic;
 public:
-  	Sonar(uint8_t pinSonarRead, uint8_t pinSonarWrite, int maxDistance);
+  	Sonar(uint8_t pinSonarRead, uint8_t pinSonarWrite, uint16_t maxDistance);
   	virtual ~Sonar();
   
-  	int readDistance();
+  	uint16_t readDistance();
 };
 
 #endif /* SONAR_H */

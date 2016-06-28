@@ -5,12 +5,13 @@
 #include <ArduinoJson.h>
 
 #include "EndpointHandler.h"
+#include "RequestParser.h"
 
 class NotFoundHandler : public EndpointHandler {
 public:
     NotFoundHandler();
     virtual ~NotFoundHandler();
-    virtual void handle(EthernetClient client);
+    virtual void handle(EthernetClient client, RequestParser& requestParser);
     virtual JsonObject& toJson();
 };
 

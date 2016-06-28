@@ -1,8 +1,8 @@
 #include "WebServer.h"
 
-#define BUFFER_SIZE 64
+#define BUFFER_SIZE 32
 
-WebServer::WebServer(uint16_t port, byte mac[], IPAddress ip) : mac(mac), ip(ip) {
+WebServer::WebServer(uint16_t port, const uint8_t mac[], IPAddress ip) : mac(mac), ip(ip) {
     server = new EthernetServer(port);
     count = 0;
 }
@@ -10,14 +10,14 @@ WebServer::WebServer(uint16_t port, byte mac[], IPAddress ip) : mac(mac), ip(ip)
 WebServer::~WebServer() {
 }
 
-void WebServer::registerHandler(String endpoint, EndpointHandler *handler) {
+void WebServer::registerHandler(const char *endpoint, EndpointHandler *handler) {
     endpoints[count] = endpoint;
     handlers[count] = handler;
     count++;
 }
 
 void WebServer::setup() {
-    Ethernet.begin(mac, ip);
+    Ethernet.begin((uint8_t *) mac, ip);
     server->begin();
     Serial.print("Server running at ");
     Serial.println(Ethernet.localIP());
@@ -27,8 +27,6 @@ void WebServer::loop() {
     
     EthernetClient client = server->available();
     if (client) {
-        Serial.println("New client");
-
         EndpointHandler *handler = &notFoundHandler;
         bool currentLineIsBlank = true;
         bool ignore = false;
@@ -42,9 +40,12 @@ void WebServer::loop() {
                 if (c == '\n') {
                     if (line.startsWith("GET")) {
                         Serial.println(line);
+                        this->requestParser.setRequest(line);
+                        
                         client.println("HTTP/1.1 200 OK");
                         client.println("Connection: close");
                         client.println("Content-Type: application/json");
+                        client.println("Access-Control-Allow-Origin: *");
                         client.println();
                         
                         uint8_t i = findHandler(line);
@@ -54,7 +55,7 @@ void WebServer::loop() {
                     }
 
                     if (currentLineIsBlank) {
-                        handler->handle(client);
+                        handler->handle(client, this->requestParser);
                         break;
                     }
 
@@ -76,9 +77,16 @@ void WebServer::loop() {
         }
 
         delay(1);
-        Serial.println("Client disconnected");
         client.stop();
     }
+}
+
+uint8_t WebServer::pin() {
+    return (uint8_t) -1;
+}
+
+uint8_t WebServer::type() {
+    return Device::WEB_SERVER;
 }
 
 void WebServer::empty(String& str) {
@@ -90,7 +98,7 @@ void WebServer::empty(String& str) {
 
 uint8_t WebServer::findHandler(String& request) {
     for (uint8_t i = 0; i < count; i++) {
-        if (request.indexOf(endpoints[i]) == 4) {
+        if (request.indexOf(endpoints[i]) == 5) {
             return i;
         }
     }

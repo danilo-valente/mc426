@@ -8,7 +8,7 @@ OpenDoorHandler::~OpenDoorHandler() {
 
 }
 
-void OpenDoorHandler::handle(EthernetClient client) {
+void OpenDoorHandler::handle(EthernetClient client, RequestParser& requestParser) {
     porta->destrancar();
     porta->abrir();
 

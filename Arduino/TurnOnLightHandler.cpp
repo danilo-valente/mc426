@@ -3,24 +3,32 @@
 
 #include "TurnOnLightHandler.h"
 
-TurnOnLightHandler::TurnOnLightHandler(Lampada *lampada) {
-    this->lampada = lampada;
+TurnOnLightHandler::TurnOnLightHandler(DeviceManager *devices): devices(devices) {
 }
 
 TurnOnLightHandler::~TurnOnLightHandler() {
 }
 
-void TurnOnLightHandler::handle(EthernetClient client) {
-    lampada->acender();
+void TurnOnLightHandler::handle(EthernetClient client, RequestParser& requestParser) {
+    uint8_t pin = (uint8_t) requestParser.get("i").toInt();
+    Lampada *lampada = (Lampada *) this->devices->find(pin, Device::LIGHT);
 
-    JsonObject& json = toJson();
+    if (lampada != NULL) {
+        lampada->acender();
+    }
+
+    JsonObject& json = toJson(lampada);
     json.printTo(client);
 }
 
-JsonObject& TurnOnLightHandler::toJson() {
+JsonObject& TurnOnLightHandler::toJson(Lampada *lampada) {
     StaticJsonBuffer<200> jsonBuffer;
     JsonObject &json = jsonBuffer.createObject();
-    json["acesa"] = lampada->estaAcesa();
+    if (lampada != NULL) {
+        json["acesa"] = lampada->estaAcesa();
+    } else {
+        json["error"] = 400;
+    }
     return json;
 }
 

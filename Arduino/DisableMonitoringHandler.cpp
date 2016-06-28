@@ -6,7 +6,7 @@ DisableMonitoringHandler::DisableMonitoringHandler(Monitoramento *monitoring) : 
 DisableMonitoringHandler::~DisableMonitoringHandler() {
 }
 
-void DisableMonitoringHandler::handle(EthernetClient client) {
+void DisableMonitoringHandler::handle(EthernetClient client, RequestParser& requestParser) {
     monitoring->desativar();
 
     JsonObject& json = toJson();

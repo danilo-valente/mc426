@@ -7,7 +7,7 @@ CloseDoorHandler::CloseDoorHandler(Porta *porta) {
 CloseDoorHandler::~CloseDoorHandler() {
 }
 
-void CloseDoorHandler::handle(EthernetClient client) {
+void CloseDoorHandler::handle(EthernetClient client, RequestParser& requestParser) {
     porta->fechar();
     porta->trancar();
 
