@@ -20,6 +20,7 @@ public:
     static const uint8_t POWER = 9;
     static const uint8_t TEMP_HUM = 10;
     static const uint8_t DOOR = 11;
+    static const uint8_t SONAR = 12;
 };
 
 #endif /* DEVICE_H */

@@ -26,6 +26,7 @@
 #include "Flame.h"
 #include "Power.h"
 #include "TempHum.h"
+#include "Sonar.h"
 
 //#define DEBUG
 
@@ -35,8 +36,8 @@
 #if defined(__AVR_ATmega2560__)
 #define PINS            52
 #define PIN_GAS         A0
-#define PIN_POWER_1     A1
-#define PIN_POWER_2     A2
+#define PIN_POWER_EMON  A1
+#define PIN_POWER       A2
 #define PIN_AUDIO        3
 #define PIN_PIR         22
 #define PIN_LIGHT_1     30
@@ -50,11 +51,14 @@
 #define PIN_FAN         40
 #define PIN_DOOR        23
 #define PIN_DOOR_LOCK   24
+#define PIN_SONAR_LED   14
+#define PIN_SONAR_ECHO  15
+#define PIN_SONAR_TRG   16
 #elif defined(__AVR_ATmega328__) || defined(__AVR_ATmega328P__)
 #define PINS            13
 #define PIN_GAS         A0
-#define PIN_POWER_1     A1
-#define PIN_POWER_2     A2
+#define PIN_POWER_EMON  A1
+#define PIN_POWER       A2
 #define PIN_AUDIO        2
 #define PIN_PIR          3
 #define PIN_LIGHT_1      4
@@ -85,6 +89,8 @@
 #define DHT_TYPE DHT11
 #define DHT_MAX_T_HEATER 20
 #define DHT_MIN_T_FAN 30
+
+#define SONAR_MAX_DISTANCE 200
 
 // Endpoints
 const char EP_AUTH[] = "a";
@@ -117,8 +123,9 @@ Gas gas(PIN_GAS, GAS_MIN_VALUE, &audio, &light2);
 Movimento pir(PIN_PIR, PIR_MIN_VALUE, &audio, &light1);
 Tank tank(PIN_TANK, &audio);
 Flame flame(PIN_FLAME, &audio);
-Power power(PIN_POWER_1, PIN_POWER_2, POWER_CALIBRATION, POWER_SAMPLES, POWER_SCALE, POWER_PRECISION);
+Power power(PIN_POWER_EMON, PIN_POWER, POWER_CALIBRATION, POWER_SAMPLES, POWER_SCALE, POWER_PRECISION);
 TempHum tempHum(PIN_DHT, DHT_TYPE, PIN_HEATER, PIN_FAN, DHT_MAX_T_HEATER, DHT_MIN_T_FAN);
+Sonar sonar(PIN_SONAR_ECHO, PIN_SONAR_TRG, SONAR_MAX_DISTANCE, PIN_SONAR_LED);
 
 Monitoramento monitoring;
 
@@ -159,6 +166,7 @@ void setup() {
     devices.add(&flame);
     devices.add(&power);
     devices.add(&tempHum);
+    devices.add(&sonar);
     devices.setup();
 
     server.registerHandler(EP_AUTH, &authHandler);

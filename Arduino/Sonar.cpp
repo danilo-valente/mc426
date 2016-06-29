@@ -1,21 +1,48 @@
-/*
- * Sonar.cpp
- *
- *  Created on: 17 de jun de 2016
- *      Author: Menf
- */
-
 #include "Sonar.h"
 
-Sonar::Sonar(uint8_t pinSonarRead, uint8_t pinSonarWrite, uint16_t maxDistance) : pinSonarRead(pinSonarRead), pinSonarWrite(pinSonarWrite), maxDistance(maxDistance) {
-//    pinMode(pinSonar, INPUT);
-//    ultrasonic(pinSonar, 11, maxDistance);
-    ultrasonic = new Ultrasonic(pinSonarRead, pinSonarWrite);
+Sonar::Sonar(uint8_t pinSonarWrite, uint8_t pinSonarRead, uint16_t maxDistance, uint8_t pinLed) : pinSonarWrite(pinSonarWrite),
+                                                                                                  pinSonarRead(pinSonarRead),
+                                                                                                  maxDistance(maxDistance),
+                                                                                                  pinLed(pinLed) {
 }
 
 Sonar::~Sonar() {
 }
 
-uint16_t Sonar::readDistance(){
-    return ultrasonic->convert(ultrasonic->timing(), Ultrasonic::CM);
+void Sonar::setup() {
+    if (ultrasonic) {
+        delete ultrasonic;
+    }
+
+    pinMode(pinSonarWrite, OUTPUT);
+    pinMode(pinSonarRead, INPUT);
+    pinMode(pinLed, OUTPUT);
+    ultrasonic = new Ultrasonic(pinSonarRead, pinSonarWrite);
 }
+
+void Sonar::loop() {
+    // Variaveis para guardar os valores em 
+    // cm (cmSec) e polegadas (inMsec)
+    float cmMsec, inMsec;
+    
+    // Le os valores do sensor ultrasonico
+    uint64_t microsec = ultrasonic->timing();
+    // Atribui os valores em cm ou polegadas as variaveis
+    cmMsec = ultrasonic->convert(microsec, Ultrasonic::CM);
+    inMsec = ultrasonic->convert(microsec, Ultrasonic::IN);
+    
+    // Mostra os valores na serial
+    Serial.print("Centimetros: ");
+    Serial.println(cmMsec);
+    Serial.print("Polegadas: ");
+    Serial.println(inMsec);
+}
+
+uint8_t Sonar::pin() {
+    return pinSonarRead;
+}
+
+uint8_t Sonar::type() {
+    return Device::SONAR;
+}
+
