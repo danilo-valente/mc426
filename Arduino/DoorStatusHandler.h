@@ -1,5 +1,5 @@
-#ifndef CLOSE_DOOR_HANDLER_H
-#define CLOSE_DOOR_HANDLER_H
+#ifndef DOOR_STATUS_HANDLER_H
+#define DOOR_STATUS_HANDLER_H
 
 #include <Ethernet.h>
 #include <ArduinoJson.h>
@@ -9,14 +9,14 @@
 #include "DeviceManager.h"
 #include "Porta.h"
 
-class CloseDoorHandler : public EndpointHandler {
+class DoorStatusHandler : public EndpointHandler {
 private:
     DeviceManager *devices;
 public:
-    CloseDoorHandler(DeviceManager *devices);
-    virtual ~CloseDoorHandler();
+    DoorStatusHandler(DeviceManager *devices);
+    virtual ~DoorStatusHandler();
     virtual void handle(EthernetClient client, RequestParser& requestParser);
     virtual JsonObject& toJson(Porta *porta);
 };
 
-#endif /* CLOSE_DOOR_HANDLER_H */
+#endif /* DOOR_STATUS_HANDLER_H */

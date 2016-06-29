@@ -19,6 +19,7 @@ public:
     static const uint8_t FLAME = 8;
     static const uint8_t POWER = 9;
     static const uint8_t TEMP_HUM = 10;
+    static const uint8_t DOOR = 11;
 };
 
 #endif /* DEVICE_H */

@@ -6,16 +6,17 @@
 
 #include "EndpointHandler.h"
 #include "RequestParser.h"
+#include "DeviceManager.h"
 #include "Porta.h"
 
 class OpenDoorHandler : public EndpointHandler {
 private:
-    Porta *porta;
+    DeviceManager *devices;
 public:
-    OpenDoorHandler(Porta *porta);
+    OpenDoorHandler(DeviceManager *devices);
     virtual ~OpenDoorHandler();
     virtual void handle(EthernetClient client, RequestParser& requestParser);
-    virtual JsonObject& toJson();
+    virtual JsonObject& toJson(Porta *porta);
 };
 
 #endif /* OPEN_DOOR_HANDLER_H */

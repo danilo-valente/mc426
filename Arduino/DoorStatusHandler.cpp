@@ -1,24 +1,20 @@
-#include "OpenDoorHandler.h"
+#include "DoorStatusHandler.h"
 
-OpenDoorHandler::OpenDoorHandler(DeviceManager *devices): devices(devices) {
+DoorStatusHandler::DoorStatusHandler(DeviceManager *devices): devices(devices) {
 }
 
-OpenDoorHandler::~OpenDoorHandler() {
+DoorStatusHandler::~DoorStatusHandler() {
 }
 
-void OpenDoorHandler::handle(EthernetClient client, RequestParser& requestParser) {
+void DoorStatusHandler::handle(EthernetClient client, RequestParser& requestParser) {
     uint8_t pin = (uint8_t) requestParser.get("i").toInt();
     Porta *porta = (Porta *) this->devices->find(pin, Device::DOOR);
-
-    if (porta != NULL) {
-        porta->abrir();
-    }
 
     JsonObject& json = toJson(porta);
     json.printTo(client);
 }
 
-JsonObject& OpenDoorHandler::toJson(Porta *porta) {
+JsonObject& DoorStatusHandler::toJson(Porta *porta) {
     StaticJsonBuffer<200> jsonBuffer;
     JsonObject &json = jsonBuffer.createObject();
     if (porta != NULL) {

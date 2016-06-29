@@ -6,7 +6,7 @@
 
 #include "Device.h"
 
-#define DM_MAX_DEVICES 10
+#define DM_MAX_DEVICES 20
 
 class DeviceManager : public Device {
 private:

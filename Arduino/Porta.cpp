@@ -8,14 +8,29 @@
 #include "Porta.h"
 
 Porta::Porta(uint8_t pinMotor, uint8_t pinTranca): pinMotor(pinMotor), pinTranca(pinTranca) {
-    aberta = false;
-    trancada = false;
-
-    pinMode(pinMotor, OUTPUT);
-    pinMode(pinTranca, OUTPUT);
 }
 
 Porta::~Porta() {
+}
+
+void Porta::setup() {
+    aberta = false;
+    trancada = false;
+    pinMode(pinMotor, OUTPUT);
+    pinMode(pinTranca, OUTPUT);
+    servo.attach(pinMotor);
+    servoLock.attach(pinTranca);
+}
+
+void Porta::loop() {
+}
+
+uint8_t Porta::pin() {
+    return pinMotor;
+}
+
+uint8_t Porta::type() {
+    return Device::DOOR;
 }
 
 bool Porta::estaAberta() {
@@ -36,7 +51,7 @@ int Porta::trancar() {
         return false;
     }
 
-    // TODO: digitalWrite
+    servoLock.write(90);
     trancada = true;
     return true;
 }
@@ -51,7 +66,7 @@ int Porta::destrancar() {
         return false;
     }
 
-    // TODO: digitalWrite
+    servoLock.write(-90);
     trancada = false;
     return true;
 }
@@ -66,9 +81,9 @@ int Porta::abrir() {
         return false;
     }
 
-    aberta = true;
     destrancar();
-    // TODO: digitalWrite
+    servo.write(90);
+    aberta = true;
     return true;
 }
 
@@ -82,7 +97,7 @@ int Porta::fechar() {
         return false;
     }
 
-    // TODO: digitalWrite
+    servo.write(-90);
     aberta = false;
     trancar();
     return true;

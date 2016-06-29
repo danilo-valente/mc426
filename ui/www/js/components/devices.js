@@ -10,28 +10,28 @@
 
         var $objects = [
             {
-                id: 1,
+                id: 30,
                 type: 'light',
                 status: false,
                 x: 150,
                 y: 170,
                 floor: 0
             }, {
-                id: 2,
+                id: 31,
                 type: 'light',
                 status: false,
                 x: 460,
                 y: 170,
                 floor: 0
             }, {
-                id: 3,
+                id: 32,
                 type: 'light',
                 status: false,
                 x: 150,
                 y: 170,
                 floor: 1
             }, {
-                id: 4,
+                id: 33,
                 type: 'light',
                 status: false,
                 x: 460,
