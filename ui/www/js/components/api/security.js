@@ -43,7 +43,7 @@
     function AuthApi($http, API_ENDPOINT) {
 
         this.auth = function (username, password) {
-            return $http.get(API_ENDPOINT + '/a', { u: username, p: password }).then(function (response) {
+            return $http.get(API_ENDPOINT + '/a?u=' + username + '&p=' + password).then(function (response) {
                 return response.data;
             });
         };

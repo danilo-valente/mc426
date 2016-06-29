@@ -30,6 +30,11 @@ void Sonar::loop() {
     // Atribui os valores em cm ou polegadas as variaveis
     cmMsec = ultrasonic->convert(microsec, Ultrasonic::CM);
     inMsec = ultrasonic->convert(microsec, Ultrasonic::IN);
+    if (cmMsec < maxDistance) {
+        digitalWrite(pinLed, HIGH);
+    } else {
+        digitalWrite(pinLed, LOW);
+    }
     
     // Mostra os valores na serial
     Serial.print("Centimetros: ");

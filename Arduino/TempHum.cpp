@@ -29,13 +29,15 @@ void TempHum::setup() {
     pinMode(pinDHT, INPUT);
     pinMode(pinHeater, OUTPUT);
     pinMode(pinFan, OUTPUT);
+    digitalWrite(pinHeater, HIGH);
+    digitalWrite(pinFan, HIGH);
     dht = new DHT(pinDHT, typeDHT);
     dht->begin();
 }
 
 void TempHum::loop() {
     temperature = dht->readTemperature();
-    
+
     if (isnan(temperature))  {
         Serial.println("Failed to read from DHT");
     } else {

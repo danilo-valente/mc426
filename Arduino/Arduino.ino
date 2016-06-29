@@ -51,9 +51,9 @@
 #define PIN_FAN         40
 #define PIN_DOOR        23
 #define PIN_DOOR_LOCK   24
-#define PIN_SONAR_LED   14
 #define PIN_SONAR_ECHO  15
 #define PIN_SONAR_TRG   16
+#define PIN_SONAR_LED   17
 #elif defined(__AVR_ATmega328__) || defined(__AVR_ATmega328P__)
 #define PINS            13
 #define PIN_GAS         A0
@@ -90,7 +90,7 @@
 #define DHT_MAX_T_HEATER 20
 #define DHT_MIN_T_FAN 30
 
-#define SONAR_MAX_DISTANCE 200
+#define SONAR_MAX_DISTANCE 5
 
 // Endpoints
 const char EP_AUTH[] = "a";
@@ -119,8 +119,8 @@ Lampada light4(PIN_LIGHT_4);
 Porta door(PIN_DOOR, PIN_DOOR_LOCK);
 
 Audio audio(PIN_AUDIO, AUDIO_FREQUENCY, AUDIO_MAX_VALUE);
-Gas gas(PIN_GAS, GAS_MIN_VALUE, &audio, &light2);
-Movimento pir(PIN_PIR, PIR_MIN_VALUE, &audio, &light1);
+Gas gas(PIN_GAS, GAS_MIN_VALUE, &audio, &light1);
+Movimento pir(PIN_PIR, PIR_MIN_VALUE, &audio, &light2);
 Tank tank(PIN_TANK, &audio);
 Flame flame(PIN_FLAME, &audio);
 Power power(PIN_POWER_EMON, PIN_POWER, POWER_CALIBRATION, POWER_SAMPLES, POWER_SCALE, POWER_PRECISION);

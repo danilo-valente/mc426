@@ -37,6 +37,13 @@
                 x: 460,
                 y: 170,
                 floor: 1
+            }, {
+                id: 23,
+                type: 'door',
+                status: false,
+                x: 295,
+                y: 170,
+                floor: 0
             }
         ];
 
